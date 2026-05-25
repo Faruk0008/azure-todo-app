@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sign in to your To-Do dashboard with your Microsoft account" />
+    <title>Sign In — Azure To-Do App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style.css" />
+</head>
+<body class="login-body">
+
+    <!-- Animated gradient orbs in background -->
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
+
+    <main class="login-card" id="login-card">
+        <!-- Logo / Icon -->
+        <div class="login-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+            </svg>
+        </div>
+
+        <h1 class="login-title">Azure To-Do</h1>
+        <p class="login-subtitle">Organize your day, powered by the cloud.</p>
+
+        <a href="/auth/login" class="btn-login" id="btn-login">
+            <!-- Microsoft logo -->
+            <svg class="ms-logo" width="20" height="20" viewBox="0 0 21 21">
+                <rect x="1"  y="1"  width="9" height="9" fill="#F25022"/>
+                <rect x="11" y="1"  width="9" height="9" fill="#7FBA00"/>
+                <rect x="1"  y="11" width="9" height="9" fill="#00A4EF"/>
+                <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
+            </svg>
+            Sign in with Microsoft
+        </a>
+
+        <p class="login-footer">
+            Protected by Microsoft Entra ID
+        </p>
+    </main>
+
+</body>
+</html>
