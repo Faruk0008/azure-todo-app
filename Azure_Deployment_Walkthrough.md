@@ -325,13 +325,4 @@ To demonstrate Azure's **Role-Based Access Control (RBAC)** during your presenta
 
 ---
 
-## Presentation Flow Summary
 
-For a smooth demo, present in this order:
-
-1. **Show the code** — Walk through `app.js`, `routes/auth.js`, and `routes/todos.js` briefly.
-2. **Show Entra ID** — Open App Registration in the portal to show the OAuth2 configuration.
-3. **Show App Service** — Show the resource you created, the Deployment Center (GitHub connection), and Environment Variables.
-4. **Live Demo** — Open the live URL, sign in, and interact with the to-do list.
-5. **Show RBAC** — Open IAM → show role assignments and explain the principle of least privilege.
-6. **Show Logs** — Open **Log stream** to show real-time monitoring.
