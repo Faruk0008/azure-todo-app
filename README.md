@@ -1,6 +1,6 @@
 # Azure To-Do App
 
-A full-stack **To-Do / Notes** web application built with **Node.js (Express)** and plain **HTML/CSS/Vanilla JS**, secured with **Microsoft Entra ID (Azure AD)** authentication. Designed for deployment on **Azure App Service (Free tier F1)**.
+A full-stack **Task Management** web application built with **Node.js (Express)** and plain **HTML/CSS/Vanilla JS**, featuring a **Kanban-style dashboard**, secured with **Microsoft Entra ID (Azure AD)** authentication. Designed for deployment on **Azure App Service (Free tier F1)**.
 
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green?logo=node.js)
 ![Azure](https://img.shields.io/badge/Azure-App%20Service-blue?logo=microsoftazure)
@@ -10,12 +10,35 @@ A full-stack **To-Do / Notes** web application built with **Node.js (Express)** 
 
 ## Features
 
-- ✅ **Add, view, complete, and delete** to-do items
+### Task Management
+- ✅ **Full CRUD** — Add, edit, and delete tasks with a confirmation prompt
+- 📋 **Rich task fields** — Title, Description, Due Date, Priority (Low/Medium/High), and Status
+- 📌 **Kanban board** — Three-column layout: To Do → In Progress → Done
+- 🔴🟡🟢 **Priority badges** — Color-coded indicators (Red = High, Yellow = Medium, Green = Low)
+- ⏰ **Overdue highlighting** — Tasks past their due date glow red
+- 🔄 **Status management** — Change task status via dropdown on each card
+
+### Search, Filter & Sort
+- 🔍 **Real-time search** — Filter tasks by title instantly (no page reload)
+- 🎯 **Priority filter** — Show All / High / Medium / Low tasks
+- 📅 **Sorting** — Sort by Due Date or Created Date
+
+### Authentication & Security
 - 🔐 **Microsoft Entra ID** (Azure AD) login — only authenticated users can access the dashboard
 - 👤 Displays the **logged-in user's name and email**
+- 🔑 **Per-user data isolation** — Tasks are separated by Entra ID OID
+
+### UI & Experience
 - 🎨 Premium **dark-mode UI** with glassmorphism and micro-animations
+- 🪟 **Modal forms** — Add and edit tasks via elegant pop-up modals
+- 🔔 **Toast notifications** — Visual feedback on add, edit, and delete actions
+- 📱 **Fully responsive** — Works on desktop, tablet, and mobile
+- 📭 **Empty state messages** — Helpful text when columns have no tasks
+
+### Infrastructure
 - ☁️ **Azure App Service**–ready (`process.env.PORT`, `web.config` included)
-- 🗂️ In-memory storage (no database required)
+- 💾 **File-based persistence** — Tasks stored in `tasks.json` (survives server restarts, no database needed)
+- 📖 **Deployment walkthrough** — Step-by-step GUI guide included (`Azure_Deployment_Walkthrough.md`)
 
 ---
 
@@ -23,18 +46,20 @@ A full-stack **To-Do / Notes** web application built with **Node.js (Express)** 
 
 ```
 Azure_Project_CA2/
-├── app.js                  # Express entry point
+├── app.js                          # Express entry point
 ├── routes/
-│   ├── auth.js             # Microsoft Entra ID login/callback/logout
-│   └── todos.js            # CRUD API for to-do items (protected)
+│   ├── auth.js                     # Microsoft Entra ID login/callback/logout
+│   └── todos.js                    # CRUD API for tasks (file-based persistence)
 ├── views/
-│   ├── login.html          # Login page (unauthenticated users)
-│   └── dashboard.html      # To-do dashboard (authenticated users)
+│   ├── login.html                  # Login page (unauthenticated users)
+│   └── dashboard.html              # Kanban-style task dashboard
 ├── public/
-│   ├── style.css           # Global stylesheet
-│   └── dashboard.js        # Client-side JavaScript
-├── web.config              # IIS config for Azure App Service
-├── .env.example            # Required environment variables template
+│   ├── style.css                   # Global stylesheet (dark-mode, Kanban, modals)
+│   └── dashboard.js                # Client-side JS (CRUD, filters, toasts)
+├── tasks.json                      # Per-user task data (auto-created, gitignored)
+├── web.config                      # IIS config for Azure App Service
+├── Azure_Deployment_Walkthrough.md # Full GUI deployment guide
+├── .env.example                    # Required environment variables template
 ├── .gitignore
 ├── package.json
 └── README.md

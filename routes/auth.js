@@ -66,7 +66,8 @@ router.get('/callback', async (req, res) => {
         req.session.user = {
             name: tokenResponse.account.name,
             email: tokenResponse.account.username,
-            homeAccountId: tokenResponse.account.homeAccountId
+            homeAccountId: tokenResponse.account.homeAccountId,
+            oid: tokenResponse.idTokenClaims?.oid || tokenResponse.account.homeAccountId.split('.')[0]
         };
 
         res.redirect('/dashboard');
