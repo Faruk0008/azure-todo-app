@@ -9,6 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/public/style.css" />
+    <script>
+        // Apply saved theme BEFORE paint to prevent flash of wrong theme
+        (function() {
+            var theme = localStorage.getItem('themePreference') || 'dark';
+            if (theme === 'light') document.documentElement.classList.add('light-mode');
+        })();
+    </script>
 </head>
 <body class="dashboard-body">
 
@@ -34,6 +41,26 @@
                 <span class="user-name" id="user-name">Loading…</span>
                 <span class="user-email" id="user-email"></span>
             </div>
+            <button class="btn-theme-toggle" id="btn-theme-toggle" title="Toggle theme">
+                <!-- Moon icon (shown in dark mode) -->
+                <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                </svg>
+                <!-- Sun icon (shown in light mode) -->
+                <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
             <a href="/auth/logout" class="btn-logout" id="btn-logout" title="Sign out">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -61,6 +88,16 @@
             <div class="stat-card stat-card--overdue">
                 <span class="stat-value" id="stat-overdue">0</span>
                 <span class="stat-label">Overdue</span>
+            </div>
+        </section>
+
+        <!-- Progress bar -->
+        <section class="progress-section" id="progress-section">
+            <div class="progress-info">
+                <span class="progress-text" id="progress-text">No tasks yet</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar__fill" id="progress-fill"></div>
             </div>
         </section>
 
@@ -111,7 +148,7 @@
                 <div class="kanban__cards" id="cards-todo">
                     <!-- Cards rendered by JS -->
                 </div>
-                <p class="kanban__empty" id="empty-todo">No tasks here</p>
+                <p class="kanban__empty" id="empty-todo">📋 Nothing to do yet — add a task to get started</p>
             </div>
 
             <!-- In Progress Column -->
@@ -124,7 +161,7 @@
                 <div class="kanban__cards" id="cards-inprogress">
                     <!-- Cards rendered by JS -->
                 </div>
-                <p class="kanban__empty" id="empty-inprogress">No tasks here</p>
+                <p class="kanban__empty" id="empty-inprogress">⚙️ No tasks in progress</p>
             </div>
 
             <!-- Done Column -->
@@ -137,7 +174,7 @@
                 <div class="kanban__cards" id="cards-done">
                     <!-- Cards rendered by JS -->
                 </div>
-                <p class="kanban__empty" id="empty-done">No completed tasks</p>
+                <p class="kanban__empty" id="empty-done">✅ No completed tasks yet</p>
             </div>
         </section>
 
@@ -164,6 +201,7 @@
                 <div class="form-group">
                     <label for="field-description">Description</label>
                     <textarea id="field-description" rows="3" maxlength="500" placeholder="Optional short note..."></textarea>
+                    <span class="char-counter" id="char-counter">0 / 500</span>
                 </div>
                 <div class="form-row">
                     <div class="form-group form-group--half">

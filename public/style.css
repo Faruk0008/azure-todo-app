@@ -299,6 +299,31 @@ input, select, textarea { font-family: inherit; }
     border-color: rgba(248, 113, 113, 0.3);
 }
 
+/* Theme toggle button */
+.btn-theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: var(--radius-xs);
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.btn-theme-toggle:hover {
+    background: var(--amber-glow);
+    color: var(--amber);
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+/* Icon visibility: dark mode shows moon, light mode shows sun */
+.icon-sun { display: none; }
+.icon-moon { display: block; }
+.light-mode .icon-sun { display: block; }
+.light-mode .icon-moon { display: none; }
+
 /* ── Dashboard Container ───────────────────────────────────────────────── */
 
 .dashboard {
@@ -366,6 +391,47 @@ input, select, textarea { font-family: inherit; }
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-top: 0.2rem;
+}
+
+/* ── Progress Bar ──────────────────────────────────────────────────────── */
+
+.progress-section {
+    margin-bottom: 1.25rem;
+    animation: fade-up 0.55s ease-out both;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+}
+
+.progress-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-input);
+    border-radius: 100px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.progress-bar__fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+    border-radius: 100px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-bar__fill--complete {
+    background: linear-gradient(90deg, var(--green), #10b981);
 }
 
 /* ── Toolbar ───────────────────────────────────────────────────────────── */
@@ -847,6 +913,26 @@ input, select, textarea { font-family: inherit; }
     min-height: 60px;
 }
 
+/* Character counter */
+.char-counter {
+    display: block;
+    text-align: right;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    font-weight: 500;
+    transition: color var(--transition);
+}
+
+.char-counter--warning {
+    color: var(--amber);
+}
+
+.char-counter--danger {
+    color: var(--red);
+    font-weight: 700;
+}
+
 .form-group select option {
     background: var(--bg-secondary);
     color: var(--text-primary);
@@ -1043,4 +1129,95 @@ input, select, textarea { font-family: inherit; }
     .task-card__created {
         display: none;
     }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.light-mode {
+    /* Background */
+    --bg-primary:     #f0f2f5;
+    --bg-secondary:   #ffffff;
+    --bg-card:        rgba(255, 255, 255, 0.75);
+    --bg-card-hover:  rgba(241, 245, 249, 0.9);
+    --bg-input:       rgba(226, 232, 240, 0.6);
+
+    /* Text */
+    --text-primary:   #1e293b;
+    --text-secondary: #475569;
+    --text-muted:     #94a3b8;
+
+    /* Borders */
+    --border:         rgba(148, 163, 184, 0.25);
+    --border-glow:    rgba(99, 102, 241, 0.3);
+
+    /* Shadow */
+    --shadow:         0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Light mode specific overrides */
+.light-mode body {
+    background: var(--bg-primary);
+}
+
+.light-mode .bg-orb {
+    opacity: 0.15;
+}
+
+.light-mode .topbar {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom-color: var(--border);
+}
+
+.light-mode .topbar__brand {
+    color: var(--accent);
+}
+
+.light-mode .login-card {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.light-mode .login-title {
+    background: linear-gradient(135deg, #1e293b, var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.light-mode .modal {
+    background: #ffffff;
+    border-color: var(--border);
+}
+
+.light-mode .modal-overlay {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.light-mode .toast {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.light-mode .task-card__status-select option,
+.light-mode .toolbar__select option,
+.light-mode .form-group select option {
+    background: #ffffff;
+    color: #1e293b;
+}
+
+.light-mode .stat-value {
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.light-mode .stat-card--progress .stat-value {
+    background: linear-gradient(135deg, #2563eb, var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.light-mode .stat-card--overdue .stat-value {
+    background: linear-gradient(135deg, #dc2626, #f59e0b);
+    -webkit-background-clip: text;
+    background-clip: text;
 }

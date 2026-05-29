@@ -9,6 +9,9 @@
  *   • Add/Edit modal, Delete confirmation
  *   • Toast notifications
  *   • Overdue task highlighting
+ *   • Progress bar (completion tracking)
+ *   • Dark/Light theme toggle
+ *   • Character counter on description field
  */
 
 (function () {
@@ -66,6 +69,16 @@
     // Toast
     const toastContainer   = document.getElementById('toast-container');
 
+    // Progress bar
+    const progressText     = document.getElementById('progress-text');
+    const progressFill     = document.getElementById('progress-fill');
+
+    // Theme toggle
+    const btnThemeToggle   = document.getElementById('btn-theme-toggle');
+
+    // Character counter
+    const charCounter      = document.getElementById('char-counter');
+
     // ── State ───────────────────────────────────────────────────────────
 
     let tasks = [];
@@ -103,6 +116,12 @@
             closeDeleteModal();
         }
     });
+
+    // Theme toggle
+    btnThemeToggle.addEventListener('click', toggleTheme);
+
+    // Character counter on description
+    fieldDescription.addEventListener('input', updateCharCounter);
 
     // ── Fetch User Info ─────────────────────────────────────────────────
 
@@ -219,6 +238,7 @@
         }
 
         taskModalOverlay.classList.add('active');
+        updateCharCounter();
         fieldTitle.focus();
     }
 
@@ -327,6 +347,9 @@
         statTotal.textContent = tasks.length;
         statProgress.textContent = inProgressCount;
         statOverdue.textContent = overdueCount;
+
+        // Update progress bar
+        updateProgressBar();
     }
 
     function renderColumn(container, columnTasks, emptyEl, countEl) {
@@ -464,6 +487,52 @@
         if (diff < 86400000)     return `${Math.floor(diff / 3600000)}h ago`;
         if (diff < 604800000)    return `${Math.floor(diff / 86400000)}d ago`;
         return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    }
+
+    // ── Progress Bar ────────────────────────────────────────────────────
+
+    function updateProgressBar() {
+        if (tasks.length === 0) {
+            progressText.textContent = 'No tasks yet';
+            progressFill.style.width = '0%';
+            progressFill.className = 'progress-bar__fill';
+            return;
+        }
+
+        const doneCount = tasks.filter(t => t.status === 'done').length;
+        const percent = Math.round((doneCount / tasks.length) * 100);
+
+        progressText.textContent = `${doneCount} of ${tasks.length} tasks completed (${percent}%)`;
+        progressFill.style.width = `${percent}%`;
+
+        if (percent === 100) {
+            progressFill.className = 'progress-bar__fill progress-bar__fill--complete';
+        } else {
+            progressFill.className = 'progress-bar__fill';
+        }
+    }
+
+    // ── Theme Toggle ────────────────────────────────────────────────────
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        const isLight = html.classList.toggle('light-mode');
+        localStorage.setItem('themePreference', isLight ? 'light' : 'dark');
+    }
+
+    // ── Character Counter ───────────────────────────────────────────────
+
+    function updateCharCounter() {
+        const len = fieldDescription.value.length;
+        const max = 500;
+        charCounter.textContent = `${len} / ${max}`;
+
+        charCounter.classList.remove('char-counter--warning', 'char-counter--danger');
+        if (len > 480) {
+            charCounter.classList.add('char-counter--danger');
+        } else if (len >= 400) {
+            charCounter.classList.add('char-counter--warning');
+        }
     }
 
 })();
